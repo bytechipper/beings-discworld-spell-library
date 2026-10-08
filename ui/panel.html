@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Being's Discworld Spell Library</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <main class="panel">
+    <div class="search-row">
+      <input id="search" type="search" placeholder="Search spells or abbreviations…" aria-label="Search spells" autocomplete="off">
+      <button class="btn" id="clear-search">Clear</button>
+    </div>
+    <div class="filters" aria-label="Filter spells">
+      <label>Guild <select id="guild"><option value="">All</option><option value="Wizard">Wizard</option><option value="Witch">Witch</option></select></label>
+      <label>Type <select id="type"><option value="">All</option><option value="Miscellaneous">Misc</option><option value="Offensive">Offensive</option><option value="Defensive">Defensive</option></select></label>
+    </div>
+    <section class="section">
+      <div class="section-header">Spell Library <span id="count" role="status" aria-live="polite"></span></div>
+      <p class="hint introduction">Select a spell to read its full details.</p>
+      <p class="hint" id="empty" hidden>No matching spells.</p>
+      <ul id="spells" aria-label="Spells, sorted A to Z"></ul>
+    </section>
+    <footer class="hint source-note">From the Discworld MUD Wiki backup · available offline.</footer>
+  </main>
+  <dialog id="spell-dialog" aria-labelledby="detail-title">
+    <header class="dialog-header">
+      <div><h1 id="detail-title"></h1><div id="detail-tags" class="tags"></div></div>
+      <button class="btn close-btn" id="close-detail" aria-label="Close spell details">×</button>
+    </header>
+    <div id="detail-content" class="dialog-content"></div>
+  </dialog>
+  <script src="spells.js"></script>
+  <script src="panel.js"></script>
+</body>
+</html>

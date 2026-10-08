@@ -1,0 +1,27 @@
+name: Test and package
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lua and importer dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y liblua5.4-0
+          python3 -m pip install -r scripts/requirements-import.txt
+      - name: Test data, runtime, and reproducible archive
+        run: python3 -m unittest discover -s tests -v
+      - name: Install browser tests
+        run: |
+          python3 -m pip install playwright==1.63.0
+          python3 -m playwright install --with-deps chromium
+      - name: Test panel
+        run: python3 tests/panel_test.py
+      - name: Build release archive
+        run: python3 scripts/build.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mallard-plugin
+          path: dist/*.mallardx
